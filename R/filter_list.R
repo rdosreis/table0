@@ -22,6 +22,7 @@
 #' @export
 
 filter_list <- function(data, lfilters){
+  n_origin <- nrow(data)
   data$row_number <- 1:nrow(data)
 
   flist <- lapply(X = lfilters, FUN = function(x) subset(x = data, subset = !eval(expr = parse(text = x))))
@@ -34,5 +35,5 @@ filter_list <- function(data, lfilters){
   data <- subset(data, !(row_number %in% rows_filt))
   data$row_number <- NULL
 
-  return(list(data = data, flist = flist))
+  return(list(data = data, N = n_origin, flist = flist))
 }

@@ -48,8 +48,11 @@ create_data <- function(filt_df){
 create_table0 <- function(filt_df){
   aux <- lapply(filt_df$flist, nrow)
   fnames <- names(aux)
+  fnames <- c("Origin", fnames)
   nvec <- unlist(aux)
   names(nvec) <- NULL
-  table0 <- data.frame(Criteria = fnames, N = nvec)
+  nvec <- c(0, nvec)
+  nsample <- filt_df$N - cumsum(nvec)
+  table0 <- data.frame(Criteria = fnames, N_excluded = nvec, N_sample = nsample)
   return(table0)
 }
